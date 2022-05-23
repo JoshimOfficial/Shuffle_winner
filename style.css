@@ -1,0 +1,8 @@
+.winner_info {
+    opacity: 0;
+    transition: 1s;
+}
+
+.shuffle_timer {
+    width: 150px!important;
+}
