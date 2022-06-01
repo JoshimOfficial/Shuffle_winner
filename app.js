@@ -1,4 +1,11 @@
 let shuffle_btn_click = document.querySelector(".shuffle_btn");
+let winner_animation = document.querySelector(".animation_winner_sec");
+
+
+let alert_audio = new Audio ("mp3/less_than_5.mp3");
+let winner_audio = new Audio ("mp3/winner.mp3");
+let winner_audio_sec = new Audio ("mp3/winner_sec.mp3");
+
 
 shuffle_btn_click.addEventListener("click", ()=>{
 
@@ -12,27 +19,57 @@ shuffle_btn_click.addEventListener("click", ()=>{
          shuffle_btn_click.disabled = true;
 
  }, 50);
+ 
+ let user_sec = document.querySelector("#select_time");
+ let user_set_time = user_sec.value + 0 + 0 + 0;
+ let set_opacity_of_left_time = document.querySelector(".shuffle_count_down");
+ set_opacity_of_left_time.style.opacity = 1;
 
-
- let get_user_shuffle_time = document.querySelector(".user_shuffle_time");
- let time_out = get_user_shuffle_time.value + 0 + 0 +0;
-
-if(time_out > 900 ) {
+ let set_left_time = document.querySelector(".count_down");
+ set_left_time.innerText = user_sec.value;
 
    setTimeout(()=>{
        let winner_text = document.querySelector(".winner_info");
        winner_text.style.opacity = "1";
        clearInterval(loop_user)
-   },time_out)
-}
+   },user_set_time)
 
-else {
 
-    setTimeout(()=>{
-        let winner_text = document.querySelector(".winner_info");
-        winner_text.style.opacity = "1";
-        clearInterval(loop_user)
-    },2000)
 
-}
+   let balance_sec = user_sec.value - 1;
+   let timer_sec_id = document.querySelector("#timer_sec");
+   
+   let count_down = setInterval(() => {
+     set_left_time.innerText = balance_sec--;
+
+     
+     if(set_left_time.innerText < 6 ) {
+      timer_sec_id.classList.remove("text-success");
+      timer_sec_id.classList.add("text-danger");
+      timer_sec_id.style.fontWeight = "bold";
+
+      //play audio
+      alert_audio.play();
+     }
+   }, 990);
+
+
+setTimeout(() => {
+  clearInterval(count_down)
+  
+  winner_animation.style.display = "block";
+  alert_audio.pause();
+  winner_audio.play();
+  winner_audio_sec.play();
+
+
+
+
+
+}, user_set_time);
+
 })
+
+
+
+
